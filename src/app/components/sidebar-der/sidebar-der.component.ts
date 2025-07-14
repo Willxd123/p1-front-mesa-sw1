@@ -14,7 +14,7 @@ export class SidebarDerComponent {
   @Input() selectedComponent: CanvasComponent | null = null;
   @Input() roomCode: string = '';
   @Input() selectedPageId: string = '';
-
+  @Input() availablePages: any[] = [];
   constructor(private SokectSevice: SokectSevice) { }
 
   parsePxValue(value: string | undefined): number {
@@ -224,6 +224,56 @@ export class SidebarDerComponent {
     this.updateTableStructure();
   }
 
+// Métodos para manejar la redirección
+getRedirectType(): string {
+  if (!this.selectedComponent?.style.redirectType) return 'none';
+  return this.selectedComponent.style.redirectType;
+}
 
+setRedirectType(type: string) {
+  if (!this.selectedComponent) return;
+  
+  this.selectedComponent.style.redirectType = type;
+  
+  // Limpiar el valor anterior si cambia el tipo
+  if (type === 'none') {
+    delete this.selectedComponent.style.redirectValue;
+    delete this.selectedComponent.style.redirectType;
+  } else {
+    this.selectedComponent.style.redirectValue = '';
+  }
+
+  this.SokectSevice.updateComponentProperties(
+    this.roomCode,
+    this.selectedPageId!,
+    this.selectedComponent.id,
+    { 
+      redirectType: type === 'none' ? undefined : type,
+      redirectValue: type === 'none' ? undefined : ''
+    }
+  );
+}
+
+getRedirectValue(): string {
+  return this.selectedComponent?.style.redirectValue || '';
+}
+
+setRedirectValue(value: string) {
+  if (!this.selectedComponent) return;
+  
+  this.selectedComponent.style.redirectValue = value;
+
+  this.SokectSevice.updateComponentProperties(
+    this.roomCode,
+    this.selectedPageId!,
+    this.selectedComponent.id,
+    { redirectValue: value }
+  );
+}
+
+getPageNameById(pageId: string): string {
+  const page = this.availablePages.find(p => p.id === pageId);
+  return page?.name || '';
+}
 
 }

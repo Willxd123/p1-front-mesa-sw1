@@ -43,6 +43,8 @@ export interface CanvasComponent {
     right?: string;
     textDecoration?: string;
     zIndex?: string;
+    redirectValue?: string; // Para redirecciones
+    redirectType?: string; // 'link' | 'route'
   };
   children?: CanvasComponent[];
   parentId?: string | null;

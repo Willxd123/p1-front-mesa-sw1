@@ -1,4 +1,4 @@
 export const environment = {
-  SERVER_URL: "https://deplo-u9v2.onrender.com",
+  SERVER_URL: "http://localhost:3000",
   CLIENT_URL: "localhost:4200"
 };
