@@ -33,7 +33,7 @@ interface Page {
     FormsModule,
     RouterModule,
     DragDropModule,
-    NavegationComponent,
+   
     SidebarIzqComponent,
     SidebarDerComponent,
   ],
@@ -51,8 +51,8 @@ export class RoomsComponent implements OnInit, AfterViewInit {
   usersInRoom: any[] = [];
   showParticipants: boolean = false;
   //zoom
-  zoomLevel: number = 0.5;  // Empezamos con el mismo scale que definimos
-  minZoom: number = 0.5;    // No puede hacer menos que esto
+  zoomLevel: number = 0.8;  // Empezamos con el mismo scale que definimos
+  minZoom: number = 0.6;    // No puede hacer menos que esto
   maxZoom: number = 2;      // Zoom máximo permitido
   zoomStep: number = 0.05;  // Cuánto aumenta o disminuye el zoom
 selectedPageId: string = '';
@@ -504,10 +504,41 @@ selectedPageId: string = '';
       this.zoomLevel = 1.0; // <-- Escala 100% al previsualizar
     } else {
       body.style.overflow = 'auto';
-      this.zoomLevel = 0.5; // <-- Regresa al zoom normal de trabajo
+      this.zoomLevel = 0.8; // <-- Regresa al zoom normal de trabajo
     }
   }
 
 
+// Agregar estas propiedades en la clase RoomsComponent
+Math = Math; // Exponer Math al template
 
+// O alternativamente, crear métodos específicos:
+zoomIn() {
+  this.zoomLevel = Math.min(this.zoomLevel + 0.1, this.maxZoom);
+}
+
+zoomOut() {
+  this.zoomLevel = Math.max(this.zoomLevel - 0.1, this.minZoom);
+}
+handleButtonClick(event: MouseEvent, component: CanvasComponent) {
+  // En modo preview, manejar la redirección
+  if (this.isPreviewMode && component.style.redirectType) {
+    event.stopPropagation();
+    
+    if (component.style.redirectType === 'page') {
+      const targetPageId = component.style.redirectValue;
+      if (targetPageId && this.pages.find(p => p.id === targetPageId)) {
+        this.selectPage(targetPageId);
+      }
+    } else if (component.style.redirectType === 'url') {
+      const url = component.style.redirectValue;
+      if (url) {
+        window.open(url, '_blank');
+      }
+    }
+  } else {
+    // En modo edición, seleccionar el componente
+    this.selectComponent(component, event);
+  }
+}
 }

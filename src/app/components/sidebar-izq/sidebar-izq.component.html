@@ -1,161 +1,305 @@
-<aside class="space-y-4 px-6 py-4">
-
-  <!-- Header y botón -->
-  <div class="border-b border-white/20 pb-4">
-    <div class="flex flex-col items-start">
-      <h1 class="flex items-center gap-2 text-white font-semibold text-base">
-        <button type="button" (click)="showParticipants = !showParticipants"
-          class="inline-flex items-center justify-center w-9 h-9 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800">
-          <svg class="w-[20px] h-[20px] text-gray-800 dark:text-white" aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-            <path fill-rule="evenodd"
-              d="M12 6a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm-1.5 8a4 4 0 0 0-4 4 2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-3Zm6.82-3.096a5.51 5.51 0 0 0-2.797-6.293 3.5 3.5 0 1 1 2.796 6.292ZM19.5 18h.5a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-1.1a5.503 5.503 0 0 1-.471.762A5.998 5.998 0 0 1 19.5 18ZM4 7.5a3.5 3.5 0 0 1 5.477-2.889 5.5 5.5 0 0 0-2.796 6.293A3.501 3.501 0 0 1 4 7.5ZM7.1 12H6a4 4 0 0 0-4 4 2 2 0 0 0 2 2h.5a5.998 5.998 0 0 1 3.071-5.238A5.505 5.505 0 0 1 7.1 12Z"
-              clip-rule="evenodd" />
-          </svg>
-
-        </button>
-        <span class="text-sm sm:text-base">Sala de trabajo:</span>
-      </h1>
-      <p class="pl-11 text-white font-semibold">{{ roomName }}</p>
-    </div>
-  </div>
-
-  <!-- Dropdown CRECIENTE -->
-  <div *ngIf="showParticipants"
-    class="w-full text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-sm dark:bg-gray-700 dark:divide-gray-600 transition-all duration-300 overflow-hidden">
-    <ul class="py-2 font-medium max-h-60 overflow-auto" role="none">
-      <li *ngFor="let user of usersInRoom">
-        <div
-          class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
-          <span class="w-3 h-3 rounded-full inline-block mr-2" [ngClass]="{
-                  'bg-green-500': user.isConnected,
-                  'bg-red-500': !user.isConnected
-                }"></span>
-          {{ user.name }}
-        </div>
-      </li>
-    </ul>
-  </div>
-
-  <button (click)="onAddPage()"
-    class="w-full mt-4 py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold">
-    ➕ Nueva Página
-  </button>
-  <!-- Botón desplegable de páginas -->
-  <div class="w-full">
-    <button type="button"
-      class="flex items-center w-full p-2 text-base text-white transition duration-75 rounded-lg group hover:bg-gray-400 "
-      (click)="dropdownOpen = !dropdownOpen">
-
-      <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Páginas</span>
-      <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
+<aside class="h-full bg-white flex flex-col">
+  
+  <!-- Header del panel -->
+  <div class="p-6 border-b border-slate-200">
+    <!-- Botón de participantes -->
+    <button
+      type="button"
+      (click)="showParticipants = !showParticipants"
+      class="group flex items-center gap-3 w-full p-3 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg transition-all duration-200"
+    >
+      <div class="flex-shrink-0 w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center group-hover:bg-blue-500 transition-colors">
+        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+          <path fill-rule="evenodd" d="M12 6a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm-1.5 8a4 4 0 0 0-4 4 2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-3Zm6.82-3.096a5.51 5.51 0 0 0-2.797-6.293 3.5 3.5 0 1 1 2.796 6.292ZM19.5 18h.5a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-1.1a5.503 5.503 0 0 1-.471.762A5.998 5.998 0 0 1 19.5 18ZM4 7.5a3.5 3.5 0 0 1 5.477-2.889 5.5 5.5 0 0 0-2.796 6.293A3.501 3.501 0 0 1 4 7.5ZM7.1 12H6a4 4 0 0 0-4 4 2 2 0 0 0 2 2h.5a5.998 5.998 0 0 1 3.071-5.238A5.505 5.505 0 0 1 7.1 12Z" clip-rule="evenodd" />
+        </svg>
+      </div>
+      <div class="flex-1 text-left">
+        <p class="text-sm font-medium text-slate-800">{{ roomName || "Cargando..." }}</p>
+        <p class="text-xs text-slate-500">Sala de trabajo</p>
+      </div>
+      <svg class="w-4 h-4 text-slate-400 transition-transform" [class.rotate-180]="showParticipants" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
       </svg>
     </button>
 
-    <!-- Lista desplegable de páginas -->
-    <ul class="py-2 space-y-2" [class.hidden]="!dropdownOpen">
-      <li *ngFor="let page of pages">
-        <a (click)="onSelectPage(page.id)"
-          class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-gray-400 "
-          [ngClass]="{ ' text-white': page.id === selectedPageId }">
-          {{ page.name }}
-        </a>
-      </li>
-    </ul>
+    <!-- Lista de participantes -->
+    <div *ngIf="showParticipants" class="mt-3 bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+      <div class="max-h-48 overflow-y-auto">
+        <div *ngFor="let user of usersInRoom" class="flex items-center gap-3 px-4 py-3 hover:bg-white transition-colors">
+          <div class="relative">
+            <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+              <span class="text-xs font-semibold text-white">{{ user.name.charAt(0).toUpperCase() }}</span>
+            </div>
+            <div class="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-white" [ngClass]="user.isConnected ? 'bg-green-500' : 'bg-slate-400'"></div>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-slate-800 truncate">{{ user.name }}</p>
+            <p class="text-xs" [ngClass]="user.isConnected ? 'text-green-600' : 'text-slate-500'">{{ user.isConnected ? "En línea" : "Desconectado" }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- Menú contextual de página (para eliminar) -->
+  <div class="flex-1 overflow-y-auto">
+    <div class="p-6 space-y-8">
+      
+      <!-- Sección de Componentes -->
+      <div class="space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
+          <h2 class="text-lg font-semibold text-slate-800">Componentes</h2>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <!-- Container/DIV -->
+          <button
+            class="group p-4 bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 rounded-xl transition-all duration-200 hover:shadow-sm"
+            (click)="addComponent()"
+          >
+            <div class="flex flex-col items-center gap-2">
+              <div class="w-10 h-10 bg-blue-100 group-hover:bg-blue-200 rounded-lg flex items-center justify-center transition-colors">
+                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                </svg>
+              </div>
+              <div class="text-center">
+                <p class="text-sm font-medium text-slate-700">Contenedor</p>
+                <p class="text-xs text-slate-500">Div básico</p>
+              </div>
+            </div>
+          </button>
+
+          <!-- Label -->
+          <button
+            class="group p-4 bg-slate-50 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 rounded-xl transition-all duration-200 hover:shadow-sm"
+            (click)="addLabelComponent()"
+          >
+            <div class="flex flex-col items-center gap-2">
+              <div class="w-10 h-10 bg-emerald-100 group-hover:bg-emerald-200 rounded-lg flex items-center justify-center transition-colors">
+                <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                </svg>
+              </div>
+              <div class="text-center">
+                <p class="text-sm font-medium text-slate-700">Etiqueta</p>
+                <p class="text-xs text-slate-500">Texto label</p>
+              </div>
+            </div>
+          </button>
+
+          <!-- Botón -->
+          <button
+            class="group p-4 bg-slate-50 hover:bg-amber-50 border border-slate-200 hover:border-amber-300 rounded-xl transition-all duration-200 hover:shadow-sm"
+            (click)="addButtonComponent()"
+          >
+            <div class="flex flex-col items-center gap-2">
+              <div class="w-10 h-10 bg-amber-100 group-hover:bg-amber-200 rounded-lg flex items-center justify-center transition-colors">
+                <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
+                </svg>
+              </div>
+              <div class="text-center">
+                <p class="text-sm font-medium text-slate-700">Botón</p>
+                <p class="text-xs text-slate-500">Interactivo</p>
+              </div>
+            </div>
+          </button>
+
+          <!-- ComboBox -->
+          <button
+            class="group p-4 bg-slate-50 hover:bg-purple-50 border border-slate-200 hover:border-purple-300 rounded-xl transition-all duration-200 hover:shadow-sm"
+            (click)="addSelectComponent()"
+          >
+            <div class="flex flex-col items-center gap-2">
+              <div class="w-10 h-10 bg-purple-100 group-hover:bg-purple-200 rounded-lg flex items-center justify-center transition-colors">
+                <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                </svg>
+              </div>
+              <div class="text-center">
+                <p class="text-sm font-medium text-slate-700">Select</p>
+                <p class="text-xs text-slate-500">Desplegable</p>
+              </div>
+            </div>
+          </button>
+
+          <!-- Tabla -->
+          <button
+            class="group p-4 bg-slate-50 hover:bg-teal-50 border border-slate-200 hover:border-teal-300 rounded-xl transition-all duration-200 hover:shadow-sm col-span-2"
+            (click)="addTableComponent()"
+          >
+            <div class="flex items-center justify-center gap-3">
+              <div class="w-10 h-10 bg-teal-100 group-hover:bg-teal-200 rounded-lg flex items-center justify-center transition-colors">
+                <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0V4a1 1 0 011-1h16a1 1 0 011 1v16a1 1 0 01-1 1H4a1 1 0 01-1-1V10z" />
+                </svg>
+              </div>
+              <div class="text-center">
+                <p class="text-sm font-medium text-slate-700">Tabla</p>
+                <p class="text-xs text-slate-500">Datos estructurados</p>
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Sección de Páginas -->
+      <div class="space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-2 h-2 bg-indigo-600 rounded-full"></div>
+          <h2 class="text-lg font-semibold text-slate-800">Páginas</h2>
+        </div>
+
+        <!-- Botón nueva página -->
+        <button
+          class="group flex items-center gap-3 w-full p-4 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 hover:border-indigo-300 rounded-xl transition-all duration-200"
+          (click)="onAddPage()"
+        >
+          <div class="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+          </div>
+          <div class="flex-1 text-left">
+            <p class="text-sm font-semibold text-indigo-800">Nueva Página</p>
+            <p class="text-xs text-indigo-600">Crear nueva pantalla</p>
+          </div>
+        </button>
+
+        <!-- Lista de páginas -->
+        <div class="space-y-2">
+          <button
+            type="button"
+            class="flex items-center justify-between w-full p-3 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg transition-all duration-200"
+            (click)="dropdownOpen = !dropdownOpen"
+          >
+            <div class="flex items-center gap-3">
+              <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <span class="text-sm font-medium text-slate-700">Páginas ({{ pages.length }})</span>
+            </div>
+            <svg class="w-4 h-4 text-slate-400 transition-transform" [class.rotate-180]="dropdownOpen" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+
+          <!-- Dropdown de páginas -->
+          <div *ngIf="dropdownOpen" class="space-y-1 pl-4">
+            <div *ngFor="let page of pages; let i = index" class="group flex items-center justify-between p-2 hover:bg-slate-50 rounded-lg transition-colors">
+              <button
+                (click)="onSelectPage(page.id)"
+                class="flex-1 flex items-center gap-3 p-2 rounded-md text-left transition-all duration-200"
+                [ngClass]="{
+                  'bg-blue-100 text-blue-800': page.id === selectedPageId,
+                  'text-slate-700 hover:bg-slate-100': page.id !== selectedPageId
+                }"
+              >
+                <div class="w-2 h-2 rounded-full" [ngClass]="{
+                  'bg-blue-600': page.id === selectedPageId,
+                  'bg-slate-400': page.id !== selectedPageId
+                }"></div>
+                <span class="text-sm font-medium truncate">{{ page.name }}</span>
+              </button>
+
+              <button
+                (click)="onPageContextMenu($event, page)"
+                class="ml-2 p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-md transition-all duration-200 opacity-0 group-hover:opacity-100"
+                title="Eliminar página"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Estado vacío -->
+          <div *ngIf="pages.length === 0" class="text-center py-8">
+            <div class="w-16 h-16 mx-auto mb-4 bg-slate-100 rounded-2xl flex items-center justify-center">
+              <svg class="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <p class="text-sm font-medium text-slate-600">No hay páginas</p>
+            <p class="text-xs text-slate-500 mt-1">Crea tu primera página para comenzar</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Herramientas adicionales -->
+      <div class="space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-2 h-2 bg-green-600 rounded-full"></div>
+          <h2 class="text-lg font-semibold text-slate-800">Herramientas</h2>
+        </div>
+
+        <!-- Ver HTML generado -->
+        <button
+          class="group flex items-center gap-3 w-full p-4 bg-green-50 hover:bg-green-100 border border-green-200 hover:border-green-300 rounded-xl transition-all duration-200"
+          (click)="openHtmlModal()"
+        >
+          <div class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+            </svg>
+          </div>
+          <div class="flex-1 text-left">
+            <p class="text-sm font-semibold text-green-800">Ver HTML</p>
+            <p class="text-xs text-green-600">Exportar código generado</p>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menú contextual de página -->
   <div *ngIf="pageContextMenu.visible" [style.left.px]="pageContextMenu.x" [style.top.px]="pageContextMenu.y"
-    class="fixed bg-white border rounded shadow z-[1000]">
+    class="fixed bg-white border border-slate-200 rounded-lg shadow-lg z-[1000] overflow-hidden py-1">
     <button (click)="deletePage(pageContextMenu.targetPageId)"
-      class="block px-4 py-2 hover:bg-gray-100 w-full text-left">
-      🗑️ Eliminar Página
+      class="flex items-center gap-2 px-4 py-2 hover:bg-red-50 w-full text-left transition-colors">
+      <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+      </svg>
+      <span class="text-sm text-red-700">Eliminar Página</span>
     </button>
   </div>
-
-
-
-
-  <!-- Page context menu -->
-  <!-- <div *ngIf="pageContextMenu.visible" [style.left.px]="pageContextMenu.x" [style.top.px]="pageContextMenu.y"
-    class="fixed bg-white border rounded shadow z-[1000]">
-    <button (click)="deletePage(pageContextMenu.targetPageId)"
-      class="block px-4 py-2 hover:bg-gray-100 w-full text-left">
-      🗑️ Eliminar Página
-    </button>
-  </div> -->
-
-  <!-- Add new page button -->
-
-  <!-- Botón de previsualización -->
-  <button (click)="togglePreview.emit()"
-    class="w-full mt-4 py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-semibold">
-    🖥️ {{ isPreview ? 'Salir Previsualizar' : 'Modo Previsualizar' }}
-  </button>
-
-
-  <!-- Resto de contenido -->
-  <h2 class="text-lg font-semibold text-white">Componentes</h2>
-
-  <button class="w-full bg-gray-600 text-white py-2 rounded hover:bg-gray-700" (click)="addComponent()">
-    Agregar Caja DIV
-  </button>
-  <button class="w-full bg-gray-600 text-white py-2 rounded hover:bg-gray-700 mt-2" (click)="addLabelComponent()">
-    Agregar Label
-  </button>
-  <button class="w-full bg-gray-600 text-white py-2 rounded hover:bg-gray-700 mt-2" (click)="addButtonComponent()">
-    Agregar button
-  </button>
-  <button class="w-full bg-gray-600 text-white py-2 rounded hover:bg-gray-700 mt-2" (click)="addSelectComponent()">
-    Agregar ComboBox
-  </button>
-  <button class="w-full bg-gray-600 text-white py-2 rounded hover:bg-gray-700 mt-2" (click)="addTableComponent()">
-    Agregar Tabla
-  </button>
-
-  <!-- <div>
-    <h3 class="text-sm font-semibold mb-2 text-white">JSON del Canvas</h3>
-    <pre class="text-xs bg-gray-100 p-2 rounded h-80  overflow-auto whitespace-pre-wrap">
-{{ components | json }}
-    </pre>
-  </div>
-  <div class="mt-4">
-    <h3 class="text-sm font-semibold mb-2 text-white">Estructura Completa (Páginas + Componentes)</h3>
-    <pre class="text-xs bg-gray-100 p-2 rounded h-80 overflow-auto whitespace-pre-wrap">
-  {{ pages | json }}
-    </pre>
-  </div> -->
-
-  <button class="w-full bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700" (click)="openHtmlModal()">
-    Ver HTML generado
-  </button>
-
 
 </aside>
 
+<!-- Modal HTML generado -->
+<div *ngIf="isModalOpen" class="fixed inset-0 bg-black/50 z-50 flex justify-center items-center p-4">
+  <div class="bg-white rounded-xl shadow-2xl w-[95%] max-h-[95%] overflow-auto relative">
+    <!-- Header del modal -->
+    <div class="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between rounded-t-xl">
+      <div>
+        <h2 class="text-xl font-semibold text-slate-800">Código Generado</h2>
+        <p class="text-sm text-slate-600">HTML y CSS de tu diseño</p>
+      </div>
+      <button (click)="isModalOpen = false" class="p-2 hover:bg-slate-100 rounded-lg transition-colors">
+        <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
 
-<!-- Modal HTML generado --><!-- Modal HTML generado -->
-<div *ngIf="isModalOpen" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center">
-  <div class="bg-white rounded shadow-lg p-6 w-[90%] max-h-[90%] overflow-auto relative grid grid-cols-2 gap-6">
-    <div>
-      <h2 class="text-lg font-semibold mb-2">HTML</h2>
-      <pre class="text-sm bg-gray-100 p-4 rounded overflow-auto whitespace-pre-wrap max-h-[70vh]">
-{{ exportHtml().html }}
-      </pre>
+    <!-- Contenido del modal -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6">
+      <div class="space-y-3">
+        <div class="flex items-center gap-2">
+          <div class="w-3 h-3 bg-orange-500 rounded-full"></div>
+          <h3 class="text-lg font-semibold text-slate-800">HTML</h3>
+        </div>
+        <pre class="text-sm bg-slate-900 text-green-400 p-4 rounded-lg overflow-auto max-h-[60vh] font-mono border border-slate-200">{{ exportHtml().html }}</pre>
+      </div>
+      <div class="space-y-3">
+        <div class="flex items-center gap-2">
+          <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+          <h3 class="text-lg font-semibold text-slate-800">CSS</h3>
+        </div>
+        <pre class="text-sm bg-slate-900 text-blue-400 p-4 rounded-lg overflow-auto max-h-[60vh] font-mono border border-slate-200">{{ exportHtml().css }}</pre>
+      </div>
     </div>
-    <div>
-      <h2 class="text-lg font-semibold mb-2">CSS</h2>
-      <pre class="text-sm bg-gray-100 p-4 rounded overflow-auto whitespace-pre-wrap max-h-[70vh]">
-{{ exportHtml().css }}
-      </pre>
-    </div>
-    <button class="absolute top-2 right-2 text-red-500 hover:text-red-700" (click)="isModalOpen = false">
-      ✖
-    </button>
   </div>
 </div>
-
-
-
-
